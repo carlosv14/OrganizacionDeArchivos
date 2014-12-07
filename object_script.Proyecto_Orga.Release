@@ -1,0 +1,15 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\tablename.o
+./release\archivo.o
+./release\bloques.o
+./release\dialog.o
+./release\datafield.o
+./release\datareg.o
+./release\metafield.o
+./release\metareg.o
+./release\moc_mainwindow.o
+./release\moc_tablename.o
+./release\moc_dialog.o
+);

@@ -286,7 +286,7 @@ void MainWindow::on_pushButton_clicked()
     if(retornaron != 0)
         blocks.buscar(retornaron)->cerrarMetaRegBlock();
     }
-if(dr.sizee>0){
+
   retornaron =  recollect();
   if(current == 0)
       blocks.buscar(2)->cerrarDataFieldBlock();
@@ -294,7 +294,7 @@ if(dr.sizee>0){
        blocks.buscar(current*2+2)->cerrarDataFieldBlock();
   if(retornaron !=0)
       blocks.buscar(retornaron)->cerrarDataFieldBlock();
-}
+
 
     qDebug()<<"mfs.sizee";
     qDebug()<<mfs.sizee;

@@ -1,0 +1,15 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\tablename.o
+./debug\archivo.o
+./debug\bloques.o
+./debug\dialog.o
+./debug\datafield.o
+./debug\datareg.o
+./debug\metafield.o
+./debug\metareg.o
+./debug\moc_mainwindow.o
+./debug\moc_tablename.o
+./debug\moc_dialog.o
+);

@@ -18,10 +18,13 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>0</y>
+      <y>40</y>
       <width>611</width>
-      <height>461</height>
+      <height>421</height>
      </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="page_2"/>
@@ -55,6 +58,16 @@
     </property>
     <property name="text">
      <string>Guardar Tabla</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>0</y>
+      <width>591</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>

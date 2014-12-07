@@ -9,6 +9,7 @@ INPUT(
 ./debug\datareg.o
 ./debug\metafield.o
 ./debug\metareg.o
+./debug\hashtable.o
 ./debug\moc_mainwindow.o
 ./debug\moc_tablename.o
 ./debug\moc_dialog.o

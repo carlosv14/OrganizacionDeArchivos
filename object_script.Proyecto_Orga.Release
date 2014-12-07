@@ -9,6 +9,7 @@ INPUT(
 ./release\datareg.o
 ./release\metafield.o
 ./release\metareg.o
+./release\hashtable.o
 ./release\moc_mainwindow.o
 ./release\moc_tablename.o
 ./release\moc_dialog.o

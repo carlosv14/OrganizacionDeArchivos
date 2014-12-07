@@ -7,7 +7,7 @@
 #include "metafield.h"
 #include "datafield.h"
 #include "datareg.h"
-
+#include "hashtable.h"
 class Bloques
 {
 public:
@@ -20,6 +20,7 @@ public:
     int cantTablas =0;
     const int size=4;
     int sig;
+    HashTable *hbt;
     QString tipo;
     Bloques(int id, Archivo *a, QString tipo);
     long mrb = 154;
@@ -28,6 +29,11 @@ public:
     long mfbE = 8;
     long dfb = 154;
     long dfbE =8;
+    long hb = 4;
+    void cerrarHashBlock();
+    int buscarenHash();
+    void escribirHashBlock(int num, int value);
+    void armarHash();
     void escribirEncabezadoMetaReg(char *Id);
     int buscarBloque(int id);
     int escribirMetaRegBlock(char* nombreT, int ID);

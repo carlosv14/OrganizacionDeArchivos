@@ -9,11 +9,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     arch= new Archivo();
-    this->contB = 3;
+    this->contB = 9;
     ui->treeWidget->setHeaderLabel("Tablas");
-    blocks.inserta(new Bloques(0,arch,"MR"));
-    blocks.inserta(new Bloques(1,arch,"MF"));
-    blocks.inserta(new Bloques(2,arch,"DR"));
+    blocks.inserta(new Bloques(0,arch,"KY"));
+    blocks.inserta(new Bloques(1,arch,"KY"));
+    blocks.inserta(new Bloques(2,arch,"KY"));
+    blocks.inserta(new Bloques(3,arch,"KY"));
+    blocks.inserta(new Bloques(4,arch,"KY"));
+    blocks.inserta(new Bloques(5,arch,"KY"));
+    blocks.inserta(new Bloques(6,arch,"MR"));
+    blocks.inserta(new Bloques(7,arch,"MF"));
+    blocks.inserta(new Bloques(8,arch,"DR"));
     leerArchivo();
 }
 
@@ -44,6 +50,7 @@ qDebug()<<mas;
  cout<<"Tablenames4: " <<tables.sizee<<endl;
  cout<<"ids4:" <<ids.sizee<<endl;
 int lastboftype;
+
  for(int i = 0; i<tables.sizee;i++){
  if(blocks.buscar(lastblock)->escribirMetaRegBlock(tables.buscar(i)->nombre,tables.buscar(i)->ID) == -1){
      lastboftype = blocks.sizee-1;
@@ -89,9 +96,9 @@ int error = 0;
     std::string nombre;
     current =index.row();
     if(current == 0)
-     error = arch->read(1*4);
+     error = arch->read(7*4);
     else
-    error = arch->read((current*2+1)*4);
+    error = arch->read((current*2+7)*4);
     ids = arch->idsc;
     TableNames = arch->TableNamess;
     for(int i = 0; i<ids.sizee;i++){
@@ -109,9 +116,9 @@ if(dr.sizee>0)
     dr.borrarTodo();
 if(error >0){
         if(current ==0 )
-           dr= arch->readData(2*4);
+           dr= arch->readData(8*4);
         else
-            dr = arch->readData((current*2+2)*4);
+            dr = arch->readData((current*2+8)*4);
         for(int i = 0; i<dr.sizee;i++){
              tablas.buscar(current)->setRowCount( tablas.buscar(current)->rowCount()+1);
             for(int j= 0 ; j<dr.buscar(i)->campos.sizee;j++){
@@ -155,22 +162,22 @@ int MainWindow::guardarMetaFields()
     int re;
     int lastboftype;
      if(current == 0){
-      re = blocks.buscar(1)->escribirMetaFieldBlock(mfs);
+      re = blocks.buscar(7)->escribirMetaFieldBlock(mfs);
       if(re!=0){
           lastboftype = blocks.sizee-1;
           for(int i = 0; i<(mfs.sizee-re); i++)
                      mfs.eliminar(i);
-          blocks.buscar(1)->crearApuntador(blocks.sizee,"MF");
+          blocks.buscar(7)->crearApuntador(blocks.sizee,"MF");
           blocks.inserta(new Bloques(contB,arch,"MF"));
           blocks.buscar(lastboftype)->escribirMetaFieldBlock(mfs);
           retorno = lastboftype;
       }
   }else{
-      re = blocks.buscar(2*current+1)->escribirMetaFieldBlock(mfs);
+      re = blocks.buscar(2*current+7)->escribirMetaFieldBlock(mfs);
       if(re!=0){
           for(int i = 0; i<(mfs.sizee-re); i++)
                      mfs.eliminar(i);
-          blocks.buscar(2*current+1)->crearApuntador(blocks.sizee,"MF");
+          blocks.buscar(2*current+7)->crearApuntador(blocks.sizee,"MF");
           blocks.inserta(new Bloques(contB,arch,"MF"));
           blocks.buscar(lastboftype)->escribirMetaFieldBlock(mfs);
           retorno =lastboftype;
@@ -210,20 +217,20 @@ QString item;
     int lastboftype;
     Lista<DataReg *> drrr;
    if(current == 0){
-       drrr= blocks.buscar(2)->escribirDataFields(dr);
+       drrr= blocks.buscar(8)->escribirDataFields(dr);
        cout<<"drrrsize: "<<drrr.sizee<<endl;
      if(drrr.sizee>0){
           lastboftype = blocks.sizee-1;
-            blocks.buscar(2)->crearApuntador(blocks.sizee,"DR");
+            blocks.buscar(8)->crearApuntador(blocks.sizee,"DR");
              blocks.inserta(new Bloques(contB,arch,"DR"));
              blocks.buscar(lastboftype)->escribirDataFields(drrr);
              retorno = lastboftype;
      }
   }else{
-       drrr = blocks.buscar(2*current+2)->escribirDataFields(dr);
+       drrr = blocks.buscar(2*current+8)->escribirDataFields(dr);
      if(drrr.sizee>0){
         lastboftype = blocks.sizee-1;
-      blocks.buscar(2*current+2)->crearApuntador(blocks.sizee,"DR");
+      blocks.buscar(2*current+8)->crearApuntador(blocks.sizee,"DR");
       blocks.inserta(new Bloques(contB,arch,"DR"));
       blocks.buscar(lastboftype)->escribirDataFields(drrr);
       retorno = lastboftype;
@@ -244,9 +251,10 @@ void MainWindow::leerArchivo()
 
     for(int i = 0; i<blocks.sizee;i++)
         if(blocks.buscar(i)->tipo == "MR"){
-            mas = arch->read(i);
+            mas = arch->read(i*4);
             lastblock = i;
         }
+
     cout<<"lastb : "<<lastblock;
     ids = arch->idsc;
     TableNames = arch->TableNamess;
@@ -281,6 +289,7 @@ void MainWindow::on_pushButton_clicked()
     for(int i = 0; i<blocks.sizee;i++)
         if(blocks.buscar(i)->tipo == "MR")
             lastblock = i;
+    cout<<"lasfs"<<lastblock;
     cout<<"Esto mas: "<<mas<<endl;
     blocks.buscar(lastblock)->cerrarMetaRegBlock();
     if(retornaron != 0)
@@ -289,9 +298,9 @@ void MainWindow::on_pushButton_clicked()
 
   retornaron =  recollect();
   if(current == 0)
-      blocks.buscar(2)->cerrarDataFieldBlock();
+      blocks.buscar(8)->cerrarDataFieldBlock();
    else
-       blocks.buscar(current*2+2)->cerrarDataFieldBlock();
+       blocks.buscar(current*2+8)->cerrarDataFieldBlock();
   if(retornaron !=0)
       blocks.buscar(retornaron)->cerrarDataFieldBlock();
 
@@ -301,12 +310,14 @@ void MainWindow::on_pushButton_clicked()
     if(mfs.sizee>0){
     retornaron = guardarMetaFields();
     if(current == 0)
-        blocks.buscar(1)->cerrarMetaFieldBlock();
+        blocks.buscar(7)->cerrarMetaFieldBlock();
     else
-        blocks.buscar(current*2+1)->cerrarMetaFieldBlock();
+        blocks.buscar(current*2+7)->cerrarMetaFieldBlock();
     }
     if(retornaron!=0)
         blocks.buscar(retornaron)->cerrarMetaFieldBlock();
+
+
 
 }
 
@@ -323,4 +334,10 @@ void MainWindow::on_pushButton_2_clicked()
 {
 
 
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+
+    blocks.buscar(0)->buscarenHash();
 }

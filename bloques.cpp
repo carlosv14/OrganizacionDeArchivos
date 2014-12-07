@@ -2,12 +2,55 @@
 
 Bloques::Bloques(int id, Archivo *a, QString tipo)
 {
+
     this->id = id;
     this->a = a;
     this->apuntador = -1;
     this->tipo = tipo;
     a->connect("Miarchivo","r+");
-   cout<<"mrb1"<<mrb<<endl;
+    cout<<"mrb1"<<mrb<<endl;
+}
+
+void Bloques::cerrarHashBlock()
+{
+    char * q3 = (char*)malloc(4);
+    char * q4 = (char*)malloc(4);
+    int num;
+    for(int i = 0 ; i<hbt->tam;i++){
+        num = hbt->valores[i];
+      memcpy(q3,&i,4);
+      memcpy(q4,&num,4);
+      cout<<"escribiendo en archivo: "<<num<<endl;
+      this->a->write(q3,0,hb,2);
+      hb+=4;
+      this->a->write(q4,0,hb,2);
+      hb+=4;
+    }
+    char * q1 = (char*)malloc(4);
+    memcpy(q1,&hb,4);
+    cout<<"hb"<<hb<<endl;
+    this->a->write(q1,0,0,2);
+}
+
+int Bloques::buscarenHash()
+{
+   armarHash();
+
+   a->hashlooking( hbt->Buscar(1));
+}
+
+void Bloques::escribirHashBlock(int num, int value)
+{
+    cout<<"num"<<num<<endl;
+    cout<<"value"<<value;
+    hbt->Agregar(num,value);
+    cout<<"esto agregue"<<hbt->Buscar(1);
+}
+
+void Bloques::armarHash()
+{
+    cout<<"puuutta"<<endl;
+ hbt = a->readHash();
 }
 
 void Bloques::escribirEncabezadoMetaReg(char * Id)
@@ -21,6 +64,7 @@ void Bloques::escribirEncabezadoMetaReg(char * Id)
 int Bloques::buscarBloque(int id)
 {
 }
+
 
 int Bloques::escribirMetaRegBlock(char *nombreT, int ID)
 {
@@ -80,6 +124,8 @@ void Bloques::cerrarMetaRegBlock()
 
 Lista<DataReg* > Bloques::escribirDataFields(Lista<DataReg* > dr)
 {
+
+  this->hbt = new HashTable();
     int n;
     char * numero = (char*)malloc(4);
     int valnum;
@@ -105,6 +151,7 @@ Lista<DataReg* > Bloques::escribirDataFields(Lista<DataReg* > dr)
     cout<<"ESTE TOTAL: "<<total<<endl;
     cout<<"drs : "<<dr.sizee;
     for(int i = 0; i<dr.sizee;i++){
+        escribirHashBlock(i+1,(id*4*1024)+dfb);
         cout<<"con dfb : "<<(dfb+total)<<endl;
         if((total*(i+1))+154 <= size*1024){
         for(int j = 0; j<dr.buscar(i)->campos.sizee; j++){
@@ -135,6 +182,7 @@ Lista<DataReg* > Bloques::escribirDataFields(Lista<DataReg* > dr)
     dr.eliminar(0);
     cout<<"Sizeee: "<<dr.sizee<<endl;
     }
+    cerrarHashBlock();
     return dr;
 }
 

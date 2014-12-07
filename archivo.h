@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "lista.h"
 #include <QDebug>
+#include "hashtable.h"
 using namespace std;
 class Archivo
 {
@@ -18,6 +19,7 @@ public:
     int uno;
     int dos;
     int cantidadReg;
+    HashTable *hbt ;
     Lista<int>idsc;
     Lista<char *>TableNamess;
     bool empty;
@@ -25,6 +27,8 @@ public:
     void closeconnection();
     void write(char * buffer, int block, long pos, int tipo);
     int read(int blockID);
+    int hashlooking(int lugar);
+    HashTable *readHash();
     Lista<DataReg *>readData(int BlockID);
     void bc();
 };

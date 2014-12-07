@@ -9,7 +9,7 @@ void Archivo::connect(char *n, char* mode)
     this->mf = fopen(n,mode);
     if(mf == NULL)
        this->mf = fopen(n,"w");
-
+this->hbt=  new HashTable();
 }
 
 void Archivo::closeconnection()
@@ -76,6 +76,45 @@ int Archivo::read(int blockID )
       cout<<TableNamess.buscar(i)<<endl;
       }
       return dos-154;
+}
+
+int Archivo::hashlooking(int lugar)
+{
+    char * tipo = (char*)malloc(4);
+    int num;
+    char *value = (char*)malloc(50);
+    fseek(mf,lugar,SEEK_SET);
+    fread(tipo,sizeof(char),4,mf);
+    memcpy(&num,tipo,4);
+    if(num == 1){
+        fread(value,sizeof(char),50,mf);
+        cout<<value;
+   } else if(num == 2){
+        fread(tipo,sizeof(char),4,mf);
+        memcpy(&num,tipo,4);
+        cout<<num;
+     }
+    return 1;
+}
+
+HashTable* Archivo::readHash()
+{
+    cout<<"llegueeee";
+    char *cant = (char*)malloc(4);
+    fseek(mf,0,SEEK_SET);
+    fread(cant,sizeof(char),4,mf);
+    char * q3 = (char*)malloc(4);
+    char * q4 = (char*)malloc(4);
+    int num;
+    int num2;
+    for(int i = 0;i<100;i++){
+        fread(q3,sizeof(char),4,mf);
+        fread(q4,sizeof(char),4,mf);
+        memcpy(&num,q3,4);
+        memcpy(&num2,q4,4);
+        hbt->Agregar(num,num2);
+    }
+    return hbt;
 }
 
 Lista<DataReg *> Archivo::readData(int BlockID)

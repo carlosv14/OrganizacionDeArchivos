@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     datafield.cpp \
     datareg.cpp \
     metafield.cpp \
-    metareg.cpp
+    metareg.cpp \
+    hashtable.cpp
 
 HEADERS  += mainwindow.h \
     tablename.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     metareg.h \
     nodo.h \
     dialog.h \
-    bloques.h
+    bloques.h \
+    hashtable.h
 
 FORMS    += mainwindow.ui \
     tablename.ui \

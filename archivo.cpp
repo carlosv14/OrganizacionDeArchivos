@@ -80,6 +80,7 @@ int Archivo::read(int blockID )
 
 int Archivo::hashlooking(int lugar)
 {
+    cout<<"looking";
     char * tipo = (char*)malloc(4);
     int num;
     char *value = (char*)malloc(50);
@@ -88,6 +89,7 @@ int Archivo::hashlooking(int lugar)
     memcpy(&num,tipo,4);
     if(num == 1){
         fread(value,sizeof(char),50,mf);
+        cout<<"es un valor"<<endl;
         cout<<value;
    } else if(num == 2){
         fread(tipo,sizeof(char),4,mf);
@@ -97,12 +99,15 @@ int Archivo::hashlooking(int lugar)
     return 1;
 }
 
-HashTable* Archivo::readHash()
+HashTable* Archivo::readHash(int hashtable)
 {
-    cout<<"llegueeee";
+    int ne;
     char *cant = (char*)malloc(4);
     fseek(mf,0,SEEK_SET);
     fread(cant,sizeof(char),4,mf);
+    memcpy(&ne,cant,4);
+    if(hashtable>0)
+    fseek(mf,(hashtable*800)+4,SEEK_SET);
     char * q3 = (char*)malloc(4);
     char * q4 = (char*)malloc(4);
     int num;
@@ -115,6 +120,16 @@ HashTable* Archivo::readHash()
         hbt->Agregar(num,num2);
     }
     return hbt;
+}
+
+int Archivo::obtenerHb(int cant)
+{
+    cout<<"cant"<<cant<<endl;
+    int retorno;
+   retorno = cant*800;
+    retorno+=4;
+    cout<<"retorno "<<retorno<<endl;
+    return retorno;
 }
 
 Lista<DataReg *> Archivo::readData(int BlockID)

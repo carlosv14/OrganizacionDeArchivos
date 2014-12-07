@@ -32,6 +32,7 @@ public:
     int current;
     int count=0;
     char *Tnom;
+      int cani;
     Lista<MetaReg*> tables;
     Lista<QTableWidget *>tablas;
     Lista<int> ids;

@@ -28,7 +28,8 @@ public:
     void write(char * buffer, int block, long pos, int tipo);
     int read(int blockID);
     int hashlooking(int lugar);
-    HashTable *readHash();
+    HashTable *readHash(int hashtable);
+    int obtenerHb(int cant);
     Lista<DataReg *>readData(int BlockID);
     void bc();
 };

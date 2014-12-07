@@ -217,22 +217,22 @@ QString item;
     int lastboftype;
     Lista<DataReg *> drrr;
    if(current == 0){
-       drrr= blocks.buscar(8)->escribirDataFields(dr);
+       drrr= blocks.buscar(8)->escribirDataFields(dr,current);
        cout<<"drrrsize: "<<drrr.sizee<<endl;
      if(drrr.sizee>0){
           lastboftype = blocks.sizee-1;
             blocks.buscar(8)->crearApuntador(blocks.sizee,"DR");
              blocks.inserta(new Bloques(contB,arch,"DR"));
-             blocks.buscar(lastboftype)->escribirDataFields(drrr);
+             blocks.buscar(lastboftype)->escribirDataFields(drrr,current);
              retorno = lastboftype;
      }
   }else{
-       drrr = blocks.buscar(2*current+8)->escribirDataFields(dr);
+       drrr = blocks.buscar(2*current+8)->escribirDataFields(dr,current);
      if(drrr.sizee>0){
         lastboftype = blocks.sizee-1;
       blocks.buscar(2*current+8)->crearApuntador(blocks.sizee,"DR");
       blocks.inserta(new Bloques(contB,arch,"DR"));
-      blocks.buscar(lastboftype)->escribirDataFields(drrr);
+      blocks.buscar(lastboftype)->escribirDataFields(drrr,current);
       retorno = lastboftype;
      }
    }
@@ -260,6 +260,8 @@ void MainWindow::leerArchivo()
     TableNames = arch->TableNamess;
     cout<<"Tablenames1: " <<tables.sizee;
     cout<<"ids1:" <<ids.sizee;
+
+
     for(int i = 0; i<ids.sizee;i++){
         tablas.inserta(new QTableWidget());
         ui->stackedWidget->addWidget(tablas.buscar(tablas.sizee-1));
@@ -297,6 +299,7 @@ void MainWindow::on_pushButton_clicked()
     }
 
   retornaron =  recollect();
+
   if(current == 0)
       blocks.buscar(8)->cerrarDataFieldBlock();
    else
@@ -338,6 +341,5 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_lineEdit_returnPressed()
 {
-
-    blocks.buscar(0)->buscarenHash();
+    blocks.buscar(0)->buscarenHash(ui->lineEdit->text().toInt(0),current);
 }

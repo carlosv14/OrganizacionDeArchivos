@@ -13,6 +13,7 @@ Bloques::Bloques(int id, Archivo *a, QString tipo)
 
 void Bloques::cerrarHashBlock()
 {
+    cout<<"este es mi hb :"<<hb<<endl;
     char * q3 = (char*)malloc(4);
     char * q4 = (char*)malloc(4);
     int num;
@@ -32,11 +33,11 @@ void Bloques::cerrarHashBlock()
     this->a->write(q1,0,0,2);
 }
 
-int Bloques::buscarenHash()
+int Bloques::buscarenHash(int id,int current)
 {
-   armarHash();
-
-   a->hashlooking( hbt->Buscar(1));
+   armarHash(current);
+cout<<"hbt->Buscar(id)"<<hbt->Buscar(id);
+   a->hashlooking( hbt->Buscar(id));
 }
 
 void Bloques::escribirHashBlock(int num, int value)
@@ -47,10 +48,9 @@ void Bloques::escribirHashBlock(int num, int value)
     cout<<"esto agregue"<<hbt->Buscar(1);
 }
 
-void Bloques::armarHash()
+void Bloques::armarHash(int current)
 {
-    cout<<"puuutta"<<endl;
- hbt = a->readHash();
+ hbt = a->readHash(current);
 }
 
 void Bloques::escribirEncabezadoMetaReg(char * Id)
@@ -122,9 +122,11 @@ void Bloques::cerrarMetaRegBlock()
     this->a->write(q2,this->id*size,4,2);
 }
 
-Lista<DataReg* > Bloques::escribirDataFields(Lista<DataReg* > dr)
+Lista<DataReg* > Bloques::escribirDataFields(Lista<DataReg* > dr,int current)
 {
-
+    if(current>=0){
+        hb = a->obtenerHb(current);
+    }
   this->hbt = new HashTable();
     int n;
     char * numero = (char*)malloc(4);

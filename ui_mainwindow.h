@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -35,11 +36,13 @@ public:
     QAction *actionNuevo_Campo_2;
     QWidget *centralWidget;
     QStackedWidget *stackedWidget;
+    QWidget *page_3;
     QWidget *page;
     QWidget *page_2;
     QTreeWidget *treeWidget;
     QPushButton *pushButton;
     QLineEdit *lineEdit;
+    QLabel *label;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -61,6 +64,9 @@ public:
         stackedWidget = new QStackedWidget(centralWidget);
         stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
         stackedWidget->setGeometry(QRect(250, 40, 611, 421));
+        page_3 = new QWidget();
+        page_3->setObjectName(QStringLiteral("page_3"));
+        stackedWidget->addWidget(page_3);
         page = new QWidget();
         page->setObjectName(QStringLiteral("page"));
         stackedWidget->addWidget(page);
@@ -79,7 +85,10 @@ public:
         pushButton->setGeometry(QRect(330, 460, 111, 23));
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(240, 0, 591, 20));
+        lineEdit->setGeometry(QRect(300, 0, 531, 20));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(260, 0, 41, 21));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -114,6 +123,7 @@ public:
         actionNuevo_Campo->setText(QApplication::translate("MainWindow", "Definir Campo", 0));
         actionNuevo_Campo_2->setText(QApplication::translate("MainWindow", "Nuevo Registro", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Guardar Tabla", 0));
+        label->setText(QApplication::translate("MainWindow", "Buscar:", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

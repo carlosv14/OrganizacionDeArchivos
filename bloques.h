@@ -31,7 +31,7 @@ public:
     long dfbE =8;
     int hb = 4;
     void cerrarHashBlock();
-    int buscarenHash(int id, int current);
+    Lista<DataReg *> buscarenHash(int id, int current, int bites);
     void escribirHashBlock(int num, int value);
     void armarHash(int current);
     void escribirEncabezadoMetaReg(char *Id);

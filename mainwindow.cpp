@@ -101,6 +101,10 @@ int error = 0;
     error = arch->read((current*2+7)*4);
     ids = arch->idsc;
     TableNames = arch->TableNamess;
+    int cantidad = tablas.buscar(current)->rowCount();
+    for(int i = 0; i<cantidad; i++)
+        tablas.buscar(current)->setRowCount( tablas.buscar(current)->rowCount()-1);
+
     for(int i = 0; i<ids.sizee;i++){
     QTableWidgetItem * tb = new QTableWidgetItem();
     campos = strdup(TableNames.buscar(i));
@@ -320,7 +324,8 @@ void MainWindow::on_pushButton_clicked()
     if(retornaron!=0)
         blocks.buscar(retornaron)->cerrarMetaFieldBlock();
 
-
+    ui->stackedWidget->setCurrentIndex(0);
+    current = -1;
 
 }
 
@@ -341,5 +346,33 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_lineEdit_returnPressed()
 {
-    blocks.buscar(0)->buscarenHash(ui->lineEdit->text().toInt(0),current);
+
+    dr.borrarTodo();
+    int bites= 0 ;
+    for(int i = 0; i<mfs.sizee;i++){
+        if( mfs.buscar(i)->tipo == 1)
+            bites+=54;
+        else
+            bites+=8;
+     }
+
+
+    dr = blocks.buscar(0)->buscarenHash(ui->lineEdit->text().toInt(0),current,bites);
+    this->tablas.buscar(current)->clearContents();
+    int cantidad = tablas.buscar(current)->rowCount();
+    for(int i = 0; i<cantidad; i++)
+        tablas.buscar(current)->setRowCount( tablas.buscar(current)->rowCount()-1);
+
+    for(int i = 0; i<dr.sizee;i++){
+        tablas.buscar(current)->setRowCount( tablas.buscar(current)->rowCount()+1);
+        for(int j= 0 ; j<dr.buscar(i)->campos.sizee;j++){
+            QTableWidgetItem * tb2 = new QTableWidgetItem();
+           if(dr.buscar(i)->campos.buscar(j)->tipo ==1)
+            tb2->setText(QString::fromStdString(strdup(dr.buscar(i)->campos.buscar(j)->val)));
+             else if(dr.buscar(i)->campos.buscar(j)->tipo == 2)
+              tb2->setText(QString::number(dr.buscar(i)->campos.buscar(j)->num));
+
+              tablas.buscar(current)->setItem(i,j,tb2);
+        }
+    }
 }

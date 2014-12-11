@@ -18,6 +18,7 @@ public:
     Archivo();
     int uno;
     int dos;
+    int getRegsize();
     int cantidadReg;
     HashTable *hbt ;
     Lista<int>idsc;
@@ -27,7 +28,7 @@ public:
     void closeconnection();
     void write(char * buffer, int block, long pos, int tipo);
     int read(int blockID);
-    int hashlooking(int lugar);
+    Lista<DataReg *>hashlooking(int lugar, int hasta);
     HashTable *readHash(int hashtable);
     int obtenerHb(int cant);
     Lista<DataReg *>readData(int BlockID);

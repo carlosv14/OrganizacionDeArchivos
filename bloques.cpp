@@ -33,11 +33,15 @@ void Bloques::cerrarHashBlock()
     this->a->write(q1,0,0,2);
 }
 
-int Bloques::buscarenHash(int id,int current)
+Lista<DataReg *> Bloques::buscarenHash(int id,int current,int bites)
 {
+
    armarHash(current);
-cout<<"hbt->Buscar(id)"<<hbt->Buscar(id);
-   a->hashlooking( hbt->Buscar(id));
+   qDebug()<<hbt->Buscar(id+1);
+bites+=hbt->Buscar(id);
+qDebug()<<bites;
+
+   return a->hashlooking(hbt->Buscar(id),bites);
 }
 
 void Bloques::escribirHashBlock(int num, int value)

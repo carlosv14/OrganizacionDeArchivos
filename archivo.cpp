@@ -4,6 +4,11 @@ Archivo::Archivo()
 {
 }
 
+int Archivo::getRegsize()
+{
+
+}
+
 void Archivo::connect(char *n, char* mode)
 {
     this->mf = fopen(n,mode);
@@ -78,25 +83,43 @@ int Archivo::read(int blockID )
       return dos-154;
 }
 
-int Archivo::hashlooking(int lugar)
+Lista<DataReg *> Archivo::hashlooking(int lugar, int hasta)
 {
+
+    QString v;
+    Lista<DataReg *> r;
+    Lista<DataField *> d;
     cout<<"looking";
     char * tipo = (char*)malloc(4);
+     char * tipo2 = (char*)malloc(4);
     int num;
+    int num2;
     char *value = (char*)malloc(50);
     fseek(mf,lugar,SEEK_SET);
+
+    while(lugar<hasta){
+        cout<<"lugar"<<lugar<<endl;
     fread(tipo,sizeof(char),4,mf);
     memcpy(&num,tipo,4);
+    lugar+=4;
     if(num == 1){
         fread(value,sizeof(char),50,mf);
         cout<<"es un valor"<<endl;
-        cout<<value;
+        v = strdup(value);
+        lugar+=50;
+
    } else if(num == 2){
-        fread(tipo,sizeof(char),4,mf);
-        memcpy(&num,tipo,4);
-        cout<<num;
+        fread(tipo2,sizeof(char),4,mf);
+        memcpy(&num2,tipo2,4);
+        v = QString::number(num2);
+        lugar+=4;
      }
-    return 1;
+         d.inserta(new DataField(v,num));
+    }
+    r.inserta(new DataReg(d));
+    d.borrarTodo();
+
+    return r;
 }
 
 HashTable* Archivo::readHash(int hashtable)

@@ -26,6 +26,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <widget class="QWidget" name="page_3"/>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="page_2"/>
    </widget>
@@ -63,11 +64,24 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>300</x>
       <y>0</y>
-      <width>591</width>
+      <width>531</width>
       <height>20</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>0</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Buscar:</string>
     </property>
    </widget>
   </widget>
